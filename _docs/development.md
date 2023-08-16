@@ -15,18 +15,20 @@
 ```text
 .
 ├── api/proto/
-    ├── buf.yaml
-    ├── proto/
-        ├── user/
-            ├── v1/
-                ├── user.proto
-        ├── greet/
-            ├── v1/
-                ├── greet.proto
+        ├── buf.yaml
+        ├── proto/
+                ├── user/
+                        ├── v1/
+                               ├── user.proto
+                ├── greet/
+                        ├── v1/
+                                ├── greet.proto
 ├── server/
-    ├── buf.gen.yaml
-    ├── go.mod
+        ├── buf.gen.yaml
+        ├── go.mod
+        ├── gen/
 ├── client/
-    ├── buf.gen.yaml
-    ├── src/
+        ├── buf.gen.yaml
+        ├── src/
+                ├── gen/
 ```
