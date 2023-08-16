@@ -14,19 +14,19 @@
 
 ```text
 .
-├ api/proto/
-    ├ buf.yaml
-    ├ proto/
-        ├ user/
-            ├ v1/
-                ├ user.proto
-        ├ greet/
-            ├ v1/
-                ├ greet.proto
-├ server/
-    ├ buf.gen.yaml
-    ├ go.mod
-├ client/
-    ├ buf.gen.yaml
-    ├ src/
+├── api/proto/
+    ├── buf.yaml
+    ├── proto/
+        ├── user/
+            ├── v1/
+                ├── user.proto
+        ├── greet/
+            ├── v1/
+                ├── greet.proto
+├── server/
+    ├── buf.gen.yaml
+    ├── go.mod
+├── client/
+    ├── buf.gen.yaml
+    ├── src/
 ```
