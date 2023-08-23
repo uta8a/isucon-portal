@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package rpc.auth.v1;
+
+option go_package = "github.com/uta8a/isucon-portal/gen/rpc/auth/v1;user";
+
+service UserService {
+  rpc GetUser(GetUserRequest) returns (GetUserResponse) {}
+}
+
+message User {
+  string user_id = 1;
+  string display_name = 2;
+  string icon_path = 3;
+}
+
+message GetUserRequest {
+  string user_id = 1;
+}
+
+message GetUserResponse {
+  User user = 1;
+}

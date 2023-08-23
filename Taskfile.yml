@@ -10,3 +10,12 @@ tasks:
     cmds:
       - echo "{{.GREETING}}"
     silent: true
+  schema:gen:
+    cmds:
+      - buf generate
+    silent: true
+  server:build:
+    cmds:
+      - go build .
+    dir: server
+    silent: true
