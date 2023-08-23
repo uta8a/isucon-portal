@@ -7,9 +7,22 @@ import (
 	"log"
 	"os"
 
+	"github.com/bufbuild/connect-go"
+	"github.com/uta8a/isucon-portal/server/gen/rpc/auth/v1/authv1connect"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/github"
 )
+
+type AppServer struct{}
+
+func (s *AppServer) GetUser(ctx context.Context, req *connect.GetUserRequest) (*authv1connect.GetUserResponse, error) {
+	return &authv1connect.GetUserResponse{
+		User: &authv1connect.User{
+			Id:   "1",
+			Name: "test",
+		},
+	}, nil
+}
 
 func main() {
 	baseUrl := os.Getenv("BASE_URL")
@@ -42,4 +55,6 @@ func main() {
 		log.Fatal(err)
 	}
 	fmt.Printf("%s\n", body)
+	appServer := &AppServer{}
+	path, handler := authv1connect.NewUserServiceHandler(appServer)
 }

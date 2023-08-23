@@ -3,6 +3,7 @@ module github.com/uta8a/isucon-portal/server
 go 1.20
 
 require (
+	github.com/bufbuild/connect-go v1.10.0 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	golang.org/x/net v0.14.0 // indirect
 	golang.org/x/oauth2 v0.11.0 // indirect
