@@ -12,7 +12,22 @@ import (
 
 func TestGetUser(t *testing.T) {
 	t.Parallel()
-	mux := App()
+
+	// interceptor for testing
+	// do nothing
+	nullInterceptor := func() connect.UnaryInterceptorFunc {
+		interceptor := func(next connect.UnaryFunc) connect.UnaryFunc {
+			return connect.UnaryFunc(func(
+				ctx context.Context,
+				req connect.AnyRequest,
+			) (connect.AnyResponse, error) {
+				return next(ctx, req)
+			})
+		}
+		return connect.UnaryInterceptorFunc(interceptor)
+	}
+
+	mux := App(nullInterceptor())
 	server := httptest.NewUnstartedServer(mux)
 	server.EnableHTTP2 = true
 	server.StartTLS()

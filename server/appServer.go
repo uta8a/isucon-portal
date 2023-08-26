@@ -24,7 +24,7 @@ func (s *AppServer) GetUser(ctx context.Context, req *connect.Request[authv1.Get
 	return res, nil
 }
 
-func App() http.Handler {
+func App(interceptor connect.UnaryInterceptorFunc) http.Handler {
 	appServer := &AppServer{}
 	mux := http.NewServeMux()
 	path, handler := authv1connect.NewUserServiceHandler(appServer)
@@ -34,6 +34,6 @@ func App() http.Handler {
 
 // register handlers
 func Run() {
-	mux := App()
+	mux := App(NewAuthInterceptor())
 	http.ListenAndServe("localhost:8080", h2c.NewHandler(mux, &http2.Server{}))
 }
