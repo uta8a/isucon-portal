@@ -25,3 +25,9 @@ tasks:
     dir: server
     silent: true
     desc: Run server tests
+  server:sqlc:
+    cmds:
+      - sqlc generate
+    dir: server
+    silent: true
+    desc: Generate SQL from queries and schema
