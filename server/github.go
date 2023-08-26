@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
@@ -9,31 +10,41 @@ import (
 	"os"
 
 	"connectrpc.com/connect"
+	authv1 "github.com/uta8a/isucon-portal/server/gen/rpc/auth/v1"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/github"
 )
 
-func GitHubAuth() {
-	baseUrl := os.Getenv("BASE_URL")
-	conf := &oauth2.Config{
+type User = authv1.User
+
+type GitHubConf struct {
+	baseUrl string
+	conf    *oauth2.Config
+}
+
+func (g *GitHubConf) New() {
+	g.baseUrl = os.Getenv("BASE_URL")
+	g.conf = &oauth2.Config{
 		ClientID:     os.Getenv("GITHUB_CLIENT_ID"),
 		ClientSecret: os.Getenv("GITHUB_CLIENT_SECRET"),
-		RedirectURL:  fmt.Sprintf("%s/api/auth/callback", baseUrl),
+		RedirectURL:  fmt.Sprintf("%s/api/auth/callback", g.baseUrl),
 		Scopes:       []string{}, // 最小限。public dataのみを取得
 		Endpoint:     github.Endpoint,
 	}
-	url := conf.AuthCodeURL("github_auth")
-	fmt.Printf("Visit the URL for the auth dialog: %v\n", url)
+}
 
-	var authCode string
-	fmt.Scan(&authCode)
-	fmt.Printf("%v\n", authCode)
+func (g *GitHubConf) IssueURL(state string) string {
+	url := g.conf.AuthCodeURL(state)
+	return url
+}
+
+func (g *GitHubConf) GetUser(authCode string) User {
 	// Handle the exchange code to initiate a transport.
-	tok, err := conf.Exchange(context.TODO(), authCode)
+	tok, err := g.conf.Exchange(context.TODO(), authCode)
 	if err != nil {
 		log.Fatal(err)
 	}
-	client := conf.Client(context.TODO(), tok)
+	client := g.conf.Client(context.TODO(), tok)
 	res, err := client.Get("https://api.github.com/user")
 	if err != nil {
 		log.Fatal(err)
@@ -43,7 +54,11 @@ func GitHubAuth() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("%s\n", body)
+	var u User
+	if err = json.Unmarshal(body, &u); err != nil {
+		log.Fatal(err)
+	}
+	return u
 }
 
 const tokenHeader = "Acme-Token"

@@ -4,6 +4,11 @@ package rpc.auth.v1;
 
 service UserService {
   rpc GetUser(GetUserRequest) returns (GetUserResponse) {}
+  rpc Login(LoginRequest) returns (LoginResponse) {}
+  rpc Logout(LogoutRequest) returns (LogoutResponse) {}
+  rpc Callback(CallbackRequest) returns (CallbackResponse) {
+    option idempotency_level = NO_SIDE_EFFECTS;
+  }
 }
 
 message User {
@@ -17,5 +22,18 @@ message GetUserRequest {
 }
 
 message GetUserResponse {
+  User user = 1;
+}
+
+message LoginRequest {}
+message LoginResponse {
+  string url = 1;
+}
+message LogoutRequest {}
+message LogoutResponse {}
+message CallbackRequest {
+  string code = 1;
+}
+message CallbackResponse {
   User user = 1;
 }
