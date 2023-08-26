@@ -19,3 +19,9 @@ tasks:
       - go build .
     dir: server
     silent: true
+  server:test:
+    cmds:
+      - go test -v .
+    dir: server
+    silent: true
+    desc: Run server tests
