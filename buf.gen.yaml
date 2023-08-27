@@ -11,8 +11,8 @@ plugins:
     out: ./server/gen
     opt: paths=source_relative
   - plugin: es
-    out: ./client/gen
+    out: ./client/src/gen
     opt: target=ts
   - plugin: connect-es
-    out: ./client/gen
+    out: ./client/src/gen
     opt: target=ts
