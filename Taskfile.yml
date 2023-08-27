@@ -12,7 +12,7 @@ tasks:
     silent: true
   schema:gen:
     cmds:
-      - buf generate
+      - PATH=$PATH:$(pwd)/client/node_modules/.bin buf generate # ref. https://github.com/connectrpc/connect-es/tree/main/packages/protoc-gen-connect-es#with-protoc
     silent: true
   server:build:
     cmds:

@@ -67,5 +67,8 @@ func App(interceptor connect.UnaryInterceptorFunc) http.Handler {
 
 func Run() {
 	mux := App(NewAuthInterceptor())
-	http.ListenAndServe("localhost:8080", h2c.NewHandler(mux, &http2.Server{}))
+	err := http.ListenAndServe(":8081", h2c.NewHandler(mux, &http2.Server{}))
+	if err != nil {
+		panic(err)
+	}
 }
