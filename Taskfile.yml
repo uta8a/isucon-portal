@@ -1,0 +1,33 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  GREETING: Hello, World!
+
+tasks:
+  default:
+    cmds:
+      - echo "{{.GREETING}}"
+    silent: true
+  schema:gen:
+    cmds:
+      - PATH=$PATH:$(pwd)/client/node_modules/.bin buf generate # ref. https://github.com/connectrpc/connect-es/tree/main/packages/protoc-gen-connect-es#with-protoc
+    silent: true
+  server:build:
+    cmds:
+      - go build .
+    dir: server
+    silent: true
+  server:test:
+    cmds:
+      - go test -v .
+    dir: server
+    silent: true
+    desc: Run server tests
+  server:sqlc:
+    cmds:
+      - sqlc generate
+    dir: server
+    silent: true
+    desc: Generate SQL from queries and schema
