@@ -15,7 +15,7 @@ function App() {
 
   return (
     <>
-      <h1>{variables.title}</h1>
+      <h1>Create React App</h1>
       <Graph />
       <pre>{JSON.stringify(data, null, 2)}</pre>
     </>
